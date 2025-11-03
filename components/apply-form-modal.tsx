@@ -11,9 +11,10 @@ interface ApplyFormModalProps {
   jobTitle: string
   company: string
   onClose: () => void
+  onPrepareInterview?: () => void
 }
 
-export default function ApplyFormModal({ jobTitle, company, onClose }: ApplyFormModalProps) {
+export default function ApplyFormModal({ jobTitle, company, onClose, onPrepareInterview }: ApplyFormModalProps) {
   const [step, setStep] = useState<"form" | "success">("form")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [formData, setFormData] = useState({
@@ -64,7 +65,7 @@ export default function ApplyFormModal({ jobTitle, company, onClose }: ApplyForm
   }
 
   if (step === "success" && appliedJob) {
-    return <ApplicationDetail application={appliedJob} onClose={onClose} />
+    return <ApplicationDetail application={appliedJob} onClose={onClose} onPrepareInterview={onPrepareInterview} />
   }
 
   return (

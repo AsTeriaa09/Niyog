@@ -5,6 +5,10 @@ import { motion } from "framer-motion"
 import ConfidenceMeter from "./confidence-meter"
 import ApplyFormModal from "./apply-form-modal"
 
+interface JobApplicationFlowProps {
+  onNavigate?: (page: string) => void
+}
+
 const mockJobs = [
   {
     id: 1,
@@ -52,7 +56,7 @@ const mockJobs = [
   },
 ]
 
-export default function JobApplicationFlow() {
+export default function JobApplicationFlow({ onNavigate }: JobApplicationFlowProps) {
   const [jobs] = useState(mockJobs)
   const [hasApplied, setHasApplied] = useState<Set<number>>(new Set())
   const [selectedJobForApply, setSelectedJobForApply] = useState<{ id: number; title: string; company: string } | null>(
@@ -199,6 +203,14 @@ export default function JobApplicationFlow() {
           jobTitle={selectedJobForApply.title}
           company={selectedJobForApply.company}
           onClose={() => setSelectedJobForApply(null)}
+          onPrepareInterview={
+            onNavigate
+              ? () => {
+                  setSelectedJobForApply(null)
+                  onNavigate("interview")
+                }
+              : undefined
+          }
         />
       )}
     </div>

@@ -6,9 +6,10 @@ import type { JobApplication } from "@/data/job-applications"
 interface ApplicationDetailProps {
   application: JobApplication
   onClose: () => void
+  onPrepareInterview?: () => void
 }
 
-export default function ApplicationDetail({ application, onClose }: ApplicationDetailProps) {
+export default function ApplicationDetail({ application, onClose, onPrepareInterview }: ApplicationDetailProps) {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "applied":
@@ -44,8 +45,9 @@ export default function ApplicationDetail({ application, onClose }: ApplicationD
   }
 
   const handlePrepareForInterview = () => {
-    // Navigate to interview session
-    window.location.href = "/interview-session"
+    if (onPrepareInterview) {
+      onPrepareInterview()
+    }
   }
 
   return (

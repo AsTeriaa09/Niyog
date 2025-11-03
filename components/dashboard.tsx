@@ -7,7 +7,11 @@ import { jobApplications } from "@/data/job-applications"
 import ApplicationDetail from "./application-detail"
 import ApplicationPipelineCard from "./application-pipeline-card"
 
-export default function Dashboard() {
+interface DashboardProps {
+  onNavigate?: (page: string) => void
+}
+
+export default function Dashboard({ onNavigate }: DashboardProps) {
   const [selectedApp, setSelectedApp] = useState<(typeof jobApplications)[0] | null>(null)
   const [applications] = useState(jobApplications)
 
@@ -17,6 +21,13 @@ export default function Dashboard() {
     interview: applications.filter((a) => a.status === "interview").length,
     shortlisted: applications.filter((a) => a.status === "shortlisted").length,
     rejected: applications.filter((a) => a.status === "rejected").length,
+  }
+
+  const handlePrepareInterview = () => {
+    setSelectedApp(null)
+    if (onNavigate) {
+      onNavigate("interview")
+    }
   }
 
   return (
@@ -76,7 +87,13 @@ export default function Dashboard() {
         <QuickStats applications={applications} />
       </div>
 
-      {selectedApp && <ApplicationDetail application={selectedApp} onClose={() => setSelectedApp(null)} />}
+      {selectedApp && (
+        <ApplicationDetail
+          application={selectedApp}
+          onClose={() => setSelectedApp(null)}
+          onPrepareInterview={handlePrepareInterview}
+        />
+      )}
     </div>
   )
 }

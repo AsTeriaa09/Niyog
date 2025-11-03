@@ -41,15 +41,15 @@ export default function Home() {
   const renderPage = () => {
     switch (currentPage) {
       case "dashboard":
-        return <Dashboard />
+        return <Dashboard onNavigate={setCurrentPage} />
       case "apply":
-        return <JobApplicationFlow />
+        return <JobApplicationFlow onNavigate={setCurrentPage} />
       case "interview":
         return <InterviewSimulator />
       case "profile":
         return <ProfileAnalytics />
       default:
-        return <Dashboard />
+        return <Dashboard onNavigate={setCurrentPage} />
     }
   }
 
