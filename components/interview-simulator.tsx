@@ -208,24 +208,7 @@ export default function InterviewSimulator() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Interview Section */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Category Flip Cards */}
-          {currentQuestionIdx === 0 && !showFeedback && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"
-            >
-              {categoryData.map((card, idx) => (
-                <FlipCard
-                  key={idx}
-                  index={idx}
-                  front={{ title: card.title, subtitle: card.subtitle }}
-                  back={{ description: card.description }}
-                />
-              ))}
-            </motion.div>
-          )}
+         
 
           {/* Question Card */}
           <motion.div
@@ -352,7 +335,7 @@ export default function InterviewSimulator() {
                         onClick={() => handleAnswer(25)}
                         className="py-3 rounded-lg gradient-button text-white font-semibold"
                       >
-                        Great
+                        Submit
                       </motion.button>
                       <motion.button
                         whileHover={{ scale: 1.05 }}

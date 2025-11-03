@@ -30,13 +30,7 @@ export default function LandingPage({ onLogin }: { onLogin: (role: string) => vo
         transition={{ duration: 0.8 }}
         className="relative z-10 max-w-2xl w-full"
       >
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold text-white mb-4">Niyog</h1>
-          <p className="text-xl text-white/80 mb-2">নিয়োগ</p>
-          <p className="text-lg text-white/70">AI-Powered Candidate-First Job Platform</p>
-          <p className="text-white/60 mt-4">Real-time status tracking, interview prep & growth feedback</p>
-        </div>
+       
 
         {/* Cards Container */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

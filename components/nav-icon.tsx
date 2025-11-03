@@ -7,9 +7,11 @@ interface NavIconProps {
   label: string
   isActive: boolean
   onClick: () => void
+  tooltip?: string
+  className?: string
 }
 
-export default function NavIcon({ icon, label, isActive, onClick }: NavIconProps) {
+export default function NavIcon({ icon, label, isActive, onClick, tooltip, className = "" }: NavIconProps) {
   return (
     <motion.button
       whileHover={{ scale: 1.15 }}
@@ -17,7 +19,8 @@ export default function NavIcon({ icon, label, isActive, onClick }: NavIconProps
       onClick={onClick}
       className={`flex flex-col items-center justify-center gap-1.5 py-3 px-4 rounded-2xl transition-all duration-300 relative group ${
         isActive ? "text-white" : "text-gray-600 hover:text-[var(--ocean-blue)]"
-      }`}
+      } ${className}`}
+      title={tooltip} // Using the tooltip prop as the HTML title attribute
     >
       {/* Background for active state */}
       {isActive && (

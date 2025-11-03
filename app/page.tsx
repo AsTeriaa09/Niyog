@@ -15,6 +15,7 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState("dashboard")
   const [userRole, setUserRole] = useState<string | null>(null)
   const [selectedJobForInterview, setSelectedJobForInterview] = useState<JobApplication | null>(null)
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     const role = localStorage.getItem("userRole")
@@ -22,8 +23,19 @@ export default function Home() {
       setIsLoggedIn(true)
       setUserRole(role)
     }
-  }, [])
+    
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setScrolled(true)
+      } else {
+        setScrolled(false)
+      }
+    }
 
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+  
   const handleLogin = (role: string) => {
     setUserRole(role)
     setIsLoggedIn(true)
@@ -69,13 +81,13 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      <header className="sticky top-0 z-40 border-b border-gray-200 bg-white/80 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <header className={`sticky top-0 z-40 border-gray-200 bg-white/80 backdrop-blur-md transition-all duration-300 ${scrolled ? 'border-b shadow-sm' : ''}`}>
+        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
           <button
             onClick={() => setCurrentPage("dashboard")}
-            className="text-2xl font-bold bg-gradient-to-r from-[#1a4b8c] to-[#2ec4b6] bg-clip-text text-transparent hover:opacity-80 transition-opacity cursor-pointer"
+            className="hover:opacity-80 transition-opacity cursor-pointer"
           >
-            Niyog
+            <img src="/logo.png" alt="Niyog Logo" className="h-26 w-26 ml-12" />
           </button>
           <div className="flex items-center gap-4">
             <div className="text-sm text-gray-600">{localStorage.getItem("userName")}</div>
