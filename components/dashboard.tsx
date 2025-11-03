@@ -6,9 +6,10 @@ import QuickStats from "./quick-stats"
 import { jobApplications } from "@/data/job-applications"
 import ApplicationDetail from "./application-detail"
 import ApplicationPipelineCard from "./application-pipeline-card"
+import type { JobApplication } from "@/data/job-applications"
 
 interface DashboardProps {
-  onNavigate?: (page: string) => void
+  onNavigate?: (page: string, jobData?: JobApplication) => void
 }
 
 export default function Dashboard({ onNavigate }: DashboardProps) {
@@ -23,10 +24,10 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
     rejected: applications.filter((a) => a.status === "rejected").length,
   }
 
-  const handlePrepareInterview = () => {
+  const handlePrepareInterview = (job: JobApplication) => {
     setSelectedApp(null)
     if (onNavigate) {
-      onNavigate("interview")
+      onNavigate("interview", job)
     }
   }
 
@@ -91,7 +92,7 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
         <ApplicationDetail
           application={selectedApp}
           onClose={() => setSelectedApp(null)}
-          onPrepareInterview={handlePrepareInterview}
+          onPrepareInterview={() => handlePrepareInterview(selectedApp)}
         />
       )}
     </div>

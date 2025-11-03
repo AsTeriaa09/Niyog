@@ -5,13 +5,16 @@ import LandingPage from "@/components/landing-page"
 import Dashboard from "@/components/dashboard"
 import JobApplicationFlow from "@/components/job-application-flow"
 import InterviewSimulator from "@/components/interview-simulator"
+import DynamicInterviewPage from "@/components/dynamic-interview-page"
 import ProfileAnalytics from "@/components/profile-analytics"
 import BottomNavigation from "@/components/bottom-navigation"
+import type { JobApplication } from "@/data/job-applications"
 
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [currentPage, setCurrentPage] = useState("dashboard")
   const [userRole, setUserRole] = useState<string | null>(null)
+  const [selectedJobForInterview, setSelectedJobForInterview] = useState<JobApplication | null>(null)
 
   useEffect(() => {
     const role = localStorage.getItem("userRole")
@@ -34,6 +37,13 @@ export default function Home() {
     setCurrentPage("dashboard")
   }
 
+  const handleNavigate = (page: string, jobData?: JobApplication) => {
+    if (jobData) {
+      setSelectedJobForInterview(jobData)
+    }
+    setCurrentPage(page)
+  }
+
   if (!isLoggedIn) {
     return <LandingPage onLogin={handleLogin} />
   }
@@ -41,15 +51,19 @@ export default function Home() {
   const renderPage = () => {
     switch (currentPage) {
       case "dashboard":
-        return <Dashboard onNavigate={setCurrentPage} />
+        return <Dashboard onNavigate={handleNavigate} />
       case "apply":
-        return <JobApplicationFlow onNavigate={setCurrentPage} />
+        return <JobApplicationFlow onNavigate={handleNavigate} />
       case "interview":
-        return <InterviewSimulator />
+        return selectedJobForInterview ? (
+          <DynamicInterviewPage job={selectedJobForInterview} onBack={() => setCurrentPage("dashboard")} />
+        ) : (
+          <InterviewSimulator />
+        )
       case "profile":
         return <ProfileAnalytics />
       default:
-        return <Dashboard onNavigate={setCurrentPage} />
+        return <Dashboard onNavigate={handleNavigate} />
     }
   }
 
