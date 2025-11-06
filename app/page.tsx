@@ -107,7 +107,7 @@ export default function Home() {
             onClick={() => setCurrentPage("dashboard")}
             className="hover:opacity-80 transition-opacity cursor-pointer"
           >
-            <img src="/logo.png" alt="Niyog Logo" className="h-16 w-22 ml-12 py-2" />
+            <img src="/logo.png" alt="Niyog Logo" className="h-18 w-22 ml-12 py-4" />
           </button>
           <div className="flex items-center gap-4">
             {userRole === "employer" && (
