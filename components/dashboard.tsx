@@ -6,6 +6,7 @@ import QuickStats from "./quick-stats"
 import { jobApplications } from "@/data/job-applications"
 import ApplicationDetail from "./application-detail"
 import ApplicationPipelineCard from "./application-pipeline-card"
+import ProfileAvatar from "@/components/profile-avatar"
 import type { JobApplication } from "@/data/job-applications"
 
 interface DashboardProps {
@@ -33,10 +34,17 @@ export default function Dashboard({ onNavigate }: DashboardProps) {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
-      {/* Header */}
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-        <h1 className="text-3xl font-bold text-[#1e293b] mb-2">Applications Dashboard</h1>
-        <p className="text-gray-600">Track your job applications through each stage of the hiring process</p>
+      {/* Header with Profile Avatar */}
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }} 
+        animate={{ opacity: 1, y: 0 }} 
+        className="mb-8 flex items-center justify-between"
+      >
+        <div>
+          <h1 className="text-3xl font-bold text-[#1e293b] mb-2">Applications Dashboard</h1>
+          <p className="text-gray-600">Track your job applications through each stage of the hiring process</p>
+        </div>
+        <ProfileAvatar />
       </motion.div>
 
       {/* Applications Pipeline - Professional Layout */}

@@ -4,8 +4,9 @@ import type React from "react"
 
 import { useState } from "react"
 import { motion } from "framer-motion"
+import ProfileAvatar from "@/components/profile-avatar"
 
-export default function EmployerLogin({ onSuccess }: { onSuccess: () => void }) {
+export default function EmployerLogin({ onSuccess, onSwitchToJobSeeker }: { onSuccess: () => void, onSwitchToJobSeeker?: () => void }) {
   const [formData, setFormData] = useState({ email: "recruiter@techcorp.com", password: "password123" })
   const [isLoading, setIsLoading] = useState(false)
 
@@ -19,8 +20,16 @@ export default function EmployerLogin({ onSuccess }: { onSuccess: () => void }) 
     }, 800)
   }
 
+  const handleSwitch = () => {
+    if (onSwitchToJobSeeker) {
+      onSwitchToJobSeeker()
+    } else {
+      window.location.reload()
+    }
+  }
+
   return (
-    <div className="min-h-screen gradient-hero flex items-center justify-center p-4">
+    <div className="min-h-screen  flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -30,6 +39,9 @@ export default function EmployerLogin({ onSuccess }: { onSuccess: () => void }) 
         <div className="backdrop-blur-md bg-white/10 rounded-3xl border border-white/20 p-8 shadow-2xl">
           {/* Header */}
           <div className="text-center mb-8">
+            <div className="flex justify-center mb-4">
+              <ProfileAvatar />
+            </div>
             <h1 className="text-4xl font-bold text-white mb-2">Welcome Back</h1>
             <p className="text-white/70">Employer Dashboard</p>
           </div>
@@ -99,7 +111,7 @@ export default function EmployerLogin({ onSuccess }: { onSuccess: () => void }) 
           {/* Login as Job Seeker */}
           <motion.button
             type="button"
-            onClick={() => window.location.reload()}
+            onClick={handleSwitch}
             whileHover={{ scale: 1.02 }}
             className="w-full py-3 rounded-xl border-2 border-white/30 text-white font-semibold hover:border-white/50 transition-all"
           >

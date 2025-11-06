@@ -1,13 +1,18 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import LandingPage from "@/components/landing-page"
+import SimpleLoginSwitch from "@/components/simple-login-switch"
 import Dashboard from "@/components/dashboard"
 import JobApplicationFlow from "@/components/job-application-flow"
 import InterviewSimulator from "@/components/interview-simulator"
 import DynamicInterviewPage from "@/components/dynamic-interview-page"
 import ProfileAnalytics from "@/components/profile-analytics"
 import BottomNavigation from "@/components/bottom-navigation"
+import EmployerDashboard from "@/components/employer-dashboard"
+import JobsManagement from "@/components/jobs-management"
+import CandidatePipeline from "@/components/candidate-pipeline"
+import AIInsights from "@/components/ai-insights"
+import ProfileAvatar from "@/components/profile-avatar"
 import type { JobApplication } from "@/data/job-applications"
 
 export default function Home() {
@@ -57,10 +62,25 @@ export default function Home() {
   }
 
   if (!isLoggedIn) {
-    return <LandingPage onLogin={handleLogin} />
+    return <SimpleLoginSwitch onLogin={handleLogin} />
   }
 
   const renderPage = () => {
+    if (userRole === "employer") {
+      switch (currentPage) {
+        case "dashboard":
+          return <EmployerDashboard onNavigate={handleNavigate} />
+        case "jobs":
+          return <JobsManagement onNavigate={handleNavigate} />
+        case "candidates":
+          return <CandidatePipeline onNavigate={handleNavigate} />
+        case "insights":
+          return <AIInsights />
+        default:
+          return <EmployerDashboard onNavigate={handleNavigate} />
+      }
+    }
+
     switch (currentPage) {
       case "dashboard":
         return <Dashboard onNavigate={handleNavigate} />
@@ -87,13 +107,49 @@ export default function Home() {
             onClick={() => setCurrentPage("dashboard")}
             className="hover:opacity-80 transition-opacity cursor-pointer"
           >
-            <img src="/logo.png" alt="Niyog Logo" className="h-26 w-26 ml-12" />
+            <img src="/logo.png" alt="Niyog Logo" className="h-16 w-22 ml-12 py-2" />
           </button>
           <div className="flex items-center gap-4">
-            <div className="text-sm text-gray-600">{localStorage.getItem("userName")}</div>
+            {userRole === "employer" && (
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setCurrentPage("dashboard")}
+                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                    currentPage === "dashboard" ? "bg-blue-100 text-blue-700" : "hover:bg-gray-100 text-gray-700"
+                  }`}
+                >
+                  Dashboard
+                </button>
+                <button
+                  onClick={() => setCurrentPage("jobs")}
+                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                    currentPage === "jobs" ? "bg-blue-100 text-blue-700" : "hover:bg-gray-100 text-gray-700"
+                  }`}
+                >
+                  Jobs
+                </button>
+                <button
+                  onClick={() => setCurrentPage("candidates")}
+                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                    currentPage === "candidates" ? "bg-blue-100 text-blue-700" : "hover:bg-gray-100 text-gray-700"
+                  }`}
+                >
+                  Candidates
+                </button>
+                <button
+                  onClick={() => setCurrentPage("insights")}
+                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                    currentPage === "insights" ? "bg-blue-100 text-blue-700" : "hover:bg-gray-100 text-gray-700"
+                  }`}
+                >
+                  Insights
+                </button>
+              </div>
+            )}
+            {/* <ProfileAvatar /> */}
             <button
               onClick={handleLogout}
-              className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium transition-colors"
+              className="px-4 py-2 rounded-lg bg-gradient-to-r from-[#ff6b35] to-[#2ec4b6] text-white font-medium transition-all hover:opacity-90"
             >
               Logout
             </button>
