@@ -165,13 +165,7 @@ export default function AIInsights() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 pb-20">
-      {/* Header */}
-      <div className="sticky top-0 z-30 bg-white border-b border-slate-200 px-6 py-4">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-3xl font-bold text-slate-900">AI Insights & Activity</h1>
-          <p className="text-sm text-slate-600 mt-1">Real-time insights and hiring activity</p>
-        </div>
-      </div>
+    
 
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

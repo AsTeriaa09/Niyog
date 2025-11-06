@@ -142,25 +142,7 @@ export default function CandidatePipeline({ onNavigate }: CandidatePipelineProps
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 pb-20">
-      {/* Header */}
-      <div className="sticky top-0 z-30 bg-white border-b border-slate-200 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-slate-900">Candidate Pipeline</h1>
-            <p className="text-sm text-slate-600 mt-1">Track and manage your candidates</p>
-          </div>
-          <div className="flex gap-2">
-            <Button
-              variant={showTopMatches ? "default" : "outline"}
-              onClick={() => setShowTopMatches(!showTopMatches)}
-              className="bg-blue-600 hover:bg-blue-700"
-            >
-              <Star className="w-4 h-4 mr-2" />
-              Top Matches
-            </Button>
-          </div>
-        </div>
-      </div>
+     
 
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Pipeline Summary */}

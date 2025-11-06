@@ -97,9 +97,10 @@ export default function JobsManagement({ onNavigate }: JobsManagementProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 pb-20">
-      {/* Header */}
-      <div className="sticky top-0 z-30 bg-white border-b border-slate-200 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+     
+
+      <div className="max-w-7xl mx-auto px-6 py-8">
+         <div className="max-w-7xl mx-auto flex items-center justify-between mb-4">
           <div>
             <h1 className="text-3xl font-bold text-slate-900">Manage Jobs</h1>
             <p className="text-sm text-slate-600 mt-1">Create and manage your job postings</p>
@@ -109,9 +110,6 @@ export default function JobsManagement({ onNavigate }: JobsManagementProps) {
             Post New Job
           </Button>
         </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Search and Filter */}
         <div className="flex gap-4 mb-6">
           <div className="flex-1 relative">
