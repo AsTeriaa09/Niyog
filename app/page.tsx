@@ -13,6 +13,9 @@ import JobsManagement from "@/components/jobs-management"
 import CandidatePipeline from "@/components/candidate-pipeline"
 import AIInsights from "@/components/ai-insights"
 import ProfileAvatar from "@/components/profile-avatar"
+import { Button } from "@/components/ui/button"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Menu } from "lucide-react"
 import type { JobApplication } from "@/data/job-applications"
 
 export default function Home() {
@@ -21,6 +24,7 @@ export default function Home() {
   const [userRole, setUserRole] = useState<string | null>(null)
   const [selectedJobForInterview, setSelectedJobForInterview] = useState<JobApplication | null>(null)
   const [scrolled, setScrolled] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const role = localStorage.getItem("userRole")
@@ -59,6 +63,8 @@ export default function Home() {
       setSelectedJobForInterview(jobData)
     }
     setCurrentPage(page)
+    // Close mobile menu when navigating
+    setIsMobileMenuOpen(false)
   }
 
   if (!isLoggedIn) {
@@ -99,6 +105,14 @@ export default function Home() {
     }
   }
 
+  // Employer navigation items
+  const employerNavItems = [
+    { id: "dashboard", label: "Dashboard" },
+    { id: "jobs", label: "Jobs" },
+    { id: "candidates", label: "Candidates" },
+    { id: "insights", label: "Insights" },
+  ]
+
   return (
     <div className="min-h-screen bg-white">
       <header className={`sticky top-0 z-40 border-gray-200 bg-white/80 backdrop-blur-md transition-all duration-300 ${scrolled ? 'border-b shadow-sm' : ''}`}>
@@ -109,41 +123,22 @@ export default function Home() {
           >
             <img src="/logo.png" alt="Niyog Logo" className="h-18 w-22 ml-12 py-4" />
           </button>
-          <div className="flex items-center gap-4">
+          
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-4">
             {userRole === "employer" && (
               <div className="flex gap-2">
-                <button
-                  onClick={() => setCurrentPage("dashboard")}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    currentPage === "dashboard" ? "text-[#1a4b8c]" : "hover:bg-gray-100 text-gray-700"
-                  }`}
-                >
-                  Dashboard
-                </button>
-                <button
-                  onClick={() => setCurrentPage("jobs")}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    currentPage === "jobs" ? "text-[#1a4b8c]" : "hover:bg-gray-100 text-gray-700"
-                  }`}
-                >
-                  Jobs
-                </button>
-                <button
-                  onClick={() => setCurrentPage("candidates")}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    currentPage === "candidates" ? "text-[#1a4b8c]" : "hover:bg-gray-100 text-gray-700"
-                  }`}
-                >
-                  Candidates
-                </button>
-                <button
-                  onClick={() => setCurrentPage("insights")}
-                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    currentPage === "insights" ? "text-[#1a4b8c]" : "hover:bg-gray-100 text-gray-700"
-                  }`}
-                >
-                  Insights
-                </button>
+                {employerNavItems.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => setCurrentPage(item.id)}
+                    className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                      currentPage === item.id ? "text-[#1a4b8c]" : "hover:bg-gray-100 text-gray-700"
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
               </div>
             )}
             {/* <ProfileAvatar /> */}
@@ -154,6 +149,74 @@ export default function Home() {
               Logout
             </button>
           </div>
+          
+          {/* Mobile Navigation - Hamburger Menu */}
+          {userRole === "employer" && (
+            <div className="md:hidden flex items-center gap-2">
+              <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="icon" className="rounded-full">
+                    <Menu className="h-6 w-6" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-[300px] sm:w-[400px] bg-white p-0">
+                  <div className="flex flex-col h-full">
+                    {/* Mobile Menu Header */}
+                    <div className="border-b border-gray-200 p-4">
+                      <h2 className="text-xl font-bold text-gray-900">Menu</h2>
+                    </div>
+                    
+                    {/* Mobile Menu Items */}
+                    <div className="flex-1 overflow-y-auto p-4">
+                      <nav className="space-y-2">
+                        {employerNavItems.map((item) => (
+                          <button
+                            key={item.id}
+                            onClick={() => {
+                              setCurrentPage(item.id)
+                              setIsMobileMenuOpen(false)
+                            }}
+                            className={`w-full text-left px-4 py-3 rounded-lg font-medium transition-colors ${
+                              currentPage === item.id 
+                                ? "bg-[#1a4b8c]/10 text-[#1a4b8c]" 
+                                : "hover:bg-gray-100 text-gray-700"
+                            }`}
+                          >
+                            {item.label}
+                          </button>
+                        ))}
+                      </nav>
+                    </div>
+                    
+                    {/* Mobile Menu Footer */}
+                    <div className="border-t border-gray-200 p-4">
+                      <button
+                        onClick={() => {
+                          handleLogout()
+                          setIsMobileMenuOpen(false)
+                        }}
+                        className="w-full px-4 py-3 rounded-lg bg-gradient-to-r from-[#ff6b35] to-[#2ec4b6] text-white font-medium transition-all hover:opacity-90"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
+          )}
+          
+          {/* Show logout button for job seekers on mobile */}
+          {userRole === "jobseeker" && (
+            <div className="md:hidden">
+              <button
+                onClick={handleLogout}
+                className="px-3 py-2 rounded-lg bg-gradient-to-r from-[#ff6b35] to-[#2ec4b6] text-white text-sm font-medium transition-all hover:opacity-90"
+              >
+                Logout
+              </button>
+            </div>
+          )}
         </div>
       </header>
 
