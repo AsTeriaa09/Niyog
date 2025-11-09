@@ -128,3 +128,15 @@ python/
 ```
 
 All endpoints and paths remain the same; logic has been moved into services and schemas for maintainability.
+
+## Diagrams
+
+<div align="center">
+  <img src="images for readme/ai-workflow.png" alt="AI Workflow" width="640" />
+  <br />
+  <img src="images for readme/ER-Diagram.png" alt="ER Diagram" width="640" />
+  <br />
+  <img src="images for readme/Niyog-Squence-Diagram.png" alt="Sequence Diagram" width="640" />
+  <br />
+  <img src="images for readme/Niyog-UserWorkFlow.png" alt="User Workflow" width="640" />
+</div>

@@ -13,6 +13,20 @@ AI-powered recruiting platform with a Next.js frontend and a FastAPI backend (on
 
 </div>
 
+## 📸 Visuals
+
+<div align="center">
+
+![AI Workflow](python/images%20for%20readme/ai-workflow.png)
+
+![ER Diagram](python/images%20for%20readme/ER-Diagram.png)
+
+![Niyog Sequence Diagram](python/images%20for%20readme/Niyog-Squence-Diagram.png)
+
+![Niyog User Workflow](python/images%20for%20readme/Niyog-UserWorkFlow.png)
+
+</div>
+
 ## 🌟 Overview
 
 Niyog helps employers and job seekers with:
@@ -127,17 +141,17 @@ docker run -p 8000:8000 --env-file .env niyog-fastapi
 
 ## 🧭 Architecture (draft)
 
-High-level request flow:
+High-level request flow (simplified):
 
 ```mermaid
 sequenceDiagram
 	participant Web as Next.js Frontend
 	participant API as FastAPI Backend
-	participant AI as AI Provider
+	participant AI as External AI Provider
 
 	Web->>API: POST /ai/match | /ai/cv-analysis | ...
-	API-->>AI: Optional outbound call (e.g., OpenAI)
-	AI-->>API: AI response
+	API-->>AI: Optional outbound call (/ai/complete)
+	AI-->>API: Completion response
 	API-->>Web: JSON result
 ```
 
