@@ -131,12 +131,14 @@ All endpoints and paths remain the same; logic has been moved into services and 
 
 ## Diagrams
 
-<div align="center">
-  <img src="images for readme/ai-workflow.png" alt="AI Workflow" width="640" />
-  <br />
-  <img src="images for readme/ER-Diagram.png" alt="ER Diagram" width="640" />
-  <br />
-  <img src="images for readme/Niyog-Squence-Diagram.png" alt="Sequence Diagram" width="640" />
-  <br />
-  <img src="images for readme/Niyog-UserWorkFlow.png" alt="User Workflow" width="640" />
-</div>
+### AI Workflow
+![AI Workflow](images%20for%20readme/ai-workflow.png)
+
+### ER Diagram
+![ER Diagram](images%20for%20readme/ER-Diagram.png)
+
+### Sequence Diagram
+![Sequence Diagram](images%20for%20readme/Niyog-Squence-Diagram.png)
+
+### User Workflow
+![User Workflow](images%20for%20readme/Niyog-UserWorkFlow.png)

@@ -152,11 +152,13 @@ docker run -p 8000:8000 --env-file .env niyog-fastapi
 We welcome contributions. Please follow these lightweight rules to keep the repo healthy and the main branch stable.
 
 ### Branching model
+
 - Frontend (Next.js): work against `main`.
 - Backend/AI (FastAPI): work against `Python` only. Do not push backend code to `main`.
 - Use short, descriptive branches: `feature/<slug>`, `fix/<slug>`, `docs/<slug>`.
 
 ### Commit messages (Conventional Commits)
+
 - `feat: ...` new feature
 - `fix: ...` bug fix
 - `docs: ...` docs-only changes
@@ -165,6 +167,7 @@ We welcome contributions. Please follow these lightweight rules to keep the repo
 - `chore: ...` tooling or maintenance
 
 ### Pull requests
+
 - Keep PRs focused and under ~500 lines when possible.
 - Include a brief description: context, what changed, how to test.
 - PR title should match commit convention.
@@ -172,23 +175,27 @@ We welcome contributions. Please follow these lightweight rules to keep the repo
 - Link related issues using `Fixes #<id>` when relevant.
 
 ### Quality checks before opening a PR
+
 - Frontend
-	- App builds and runs locally: `pnpm install` then `pnpm dev`.
-	- Lint passes (use the project’s configured linters if available).
+  - App builds and runs locally: `pnpm install` then `pnpm dev`.
+  - Lint passes (use the project’s configured linters if available).
 - Backend
-	- API runs locally: `uvicorn src.app:app --reload`.
-	- Tests pass: `pytest -q`.
-	- Endpoints you changed are documented in `python/README.md`.
+  - API runs locally: `uvicorn src.app:app --reload`.
+  - Tests pass: `pytest -q`.
+  - Endpoints you changed are documented in `python/README.md`.
 
 ### Code style (guidance)
+
 - Frontend: follow existing patterns, prefer TypeScript types, keep components small and accessible.
 - Backend: type-hint Python functions, keep endpoints thin and move logic into `services/`, share request/response models in `schemas/`.
 
 ### Issue reporting
+
 - Use clear titles and steps to reproduce.
 - Label appropriately: `bug`, `enhancement`, `docs`, `question`.
 
 ### Security & secrets
+
 - Never commit secrets (.env). Use `.env.example` for placeholders.
 - If a secret is committed by mistake, rotate it immediately and open a small PR to remove it from history if necessary.
 
