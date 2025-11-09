@@ -6,7 +6,7 @@ import PulseGraph from "./pulse-graph"
 import GrowthTimeline from "./growth-timeline"
 
 const mockProfileData = {
-  name: "Alex Johnson",
+  name: "Siratul Islam",
   skills: [
     { skill: "React", score: 90 },
     { skill: "TypeScript", score: 85 },

@@ -15,7 +15,7 @@ export default function JobSeekerLogin({ onSuccess, onSwitchToEmployer }: { onSu
     setIsLoading(true)
     setTimeout(() => {
       localStorage.setItem("userRole", "jobseeker")
-      localStorage.setItem("userName", "Alex Johnson")
+      localStorage.setItem("userName", "Siratul Islam")
       onSuccess()
     }, 800)
   }
@@ -39,9 +39,9 @@ export default function JobSeekerLogin({ onSuccess, onSwitchToEmployer }: { onSu
         <div className="backdrop-blur-md bg-white/10 rounded-3xl border border-white/20 p-8 shadow-2xl">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="flex justify-center mb-4">
+            {/* <div className="flex justify-center mb-4">
               <ProfileAvatar />
-            </div>
+            </div> */}
             <h1 className="text-4xl font-bold text-white mb-2">Welcome Back</h1>
             <p className="text-white/70">Job Seeker Login</p>
           </div>

@@ -18,7 +18,7 @@ export default function ApplyFormModal({ jobTitle, company, onClose, onPrepareIn
   const [step, setStep] = useState<"form" | "success">("form")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [formData, setFormData] = useState({
-    fullName: "Alex Johnson",
+    fullName: "Siratul Islam",
     email: "alex@example.com",
     phone: "+1 (555) 123-4567",
     resume: "Full_Stack_Developer_Resume.pdf",

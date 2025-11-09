@@ -37,7 +37,7 @@ export default function EmployerDashboard({ onNavigate }: NavProps) {
   // Top candidates
   const topCandidates = [
     {
-      name: "Sarah Chen",
+      name: "Siratul Islam",
       match: 95,
       rating: 5.0,
       experience: "3 Yrs React",

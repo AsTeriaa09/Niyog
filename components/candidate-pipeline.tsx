@@ -75,8 +75,8 @@ export default function CandidatePipeline({ onNavigate }: CandidatePipelineProps
     },
     {
       id: "4",
-      name: "John Smith",
-      email: "john.smith@email.com",
+      name: "Siratul Islam",
+      email: "siratul.islam@email.com",
       phone: "+1 (555) 321-9876",
       role: "Senior Frontend Developer",
       stage: "offer",

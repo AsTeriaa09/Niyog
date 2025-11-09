@@ -79,6 +79,18 @@ export default function JobsManagement({ onNavigate }: JobsManagementProps) {
   const [expandedJob, setExpandedJob] = useState<string | null>(null)
   const [showJobForm, setShowJobForm] = useState(false)
   const [showFilterMenu, setShowFilterMenu] = useState(false)
+  const [showAIEnhancement, setShowAIEnhancement] = useState(false)
+  const [isAnalyzing, setIsAnalyzing] = useState(false)
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+  const [newJobData, setNewJobData] = useState({
+    title: "",
+    department: "",
+    location: "",
+    type: "Full-time" as "Full-time" | "Contract" | "Part-time",
+    salary: "",
+    skills: "",
+    description: "",
+  })
 
   const filteredJobs = jobs.filter((job) => {
     const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -94,6 +106,122 @@ export default function JobsManagement({ onNavigate }: JobsManagementProps) {
 
   const handleDeleteJob = (jobId: string) => {
     setJobs(jobs.filter((job) => job.id !== jobId))
+  }
+
+  const handleAIEnhancement = () => {
+    setIsAnalyzing(true)
+    setTimeout(() => {
+      setIsAnalyzing(false)
+      setShowAIEnhancement(true)
+    }, 2000)
+  }
+
+  const getAISuggestions = () => {
+    const suggestions = []
+    
+    if (newJobData.title) {
+      if (newJobData.title.toLowerCase().includes("developer")) {
+        suggestions.push({
+          field: "Title",
+          current: newJobData.title,
+          suggested: newJobData.title.replace(/developer/i, "Engineer"),
+          reason: "Engineer typically attracts 23% more qualified candidates than Developer"
+        })
+      } else if (newJobData.title.toLowerCase().includes("manager")) {
+        suggestions.push({
+          field: "Title",
+          current: newJobData.title,
+          suggested: `Senior ${newJobData.title}`,
+          reason: "Adding seniority level increases application quality by 34%"
+        })
+      }
+    }
+
+    if (newJobData.location && newJobData.location.toLowerCase() === "remote") {
+      suggestions.push({
+        field: "Location",
+        current: newJobData.location,
+        suggested: "Remote (US Timezone)",
+        reason: "Specifying timezone reduces unqualified applications by 41%"
+      })
+    }
+
+    if (newJobData.description && newJobData.description.length < 100) {
+      suggestions.push({
+        field: "Description",
+        current: "Current description is too brief",
+        suggested: "Add 3-5 paragraphs covering: role overview, key responsibilities, team culture, growth opportunities",
+        reason: "Detailed descriptions receive 67% more applications"
+      })
+    }
+
+    if (newJobData.salary && !newJobData.salary.includes("K")) {
+      suggestions.push({
+        field: "Salary",
+        current: newJobData.salary,
+        suggested: newJobData.salary + "K",
+        reason: "Standard formatting improves clarity and professionalism"
+      })
+    }
+
+    if (suggestions.length === 0) {
+      suggestions.push({
+        field: "Overall",
+        current: "Your job posting looks good!",
+        suggested: "Consider adding more details to attract top talent",
+        reason: "Comprehensive postings perform 45% better"
+      })
+    }
+
+    return suggestions
+  }
+
+  const handlePublishJob = () => {
+    if (!newJobData.title || !newJobData.department) {
+      alert("Please fill in at least the job title and department")
+      return
+    }
+
+    const newJob: JobListing = {
+      id: (jobs.length + 1).toString(),
+      title: newJobData.title,
+      department: newJobData.department,
+      location: newJobData.location || "Not specified",
+      type: newJobData.type,
+      applications: 0,
+      status: "open",
+      salary: newJobData.salary || "Competitive",
+      applications_detail: { applied: 0, screened: 0, interview: 0 },
+    }
+
+    setJobs([newJob, ...jobs])
+    setShowSuccessMessage(true)
+    
+    setTimeout(() => {
+      setShowSuccessMessage(false)
+      setShowJobForm(false)
+      setShowAIEnhancement(false)
+      setNewJobData({
+        title: "",
+        department: "",
+        location: "",
+        type: "Full-time",
+        salary: "",
+        skills: "",
+        description: "",
+      })
+    }, 3000)
+  }
+
+  const applyAISuggestion = (field: string, suggested: string) => {
+    if (field === "Title") {
+      setNewJobData({ ...newJobData, title: suggested })
+    } else if (field === "Location") {
+      setNewJobData({ ...newJobData, location: suggested })
+    } else if (field === "Salary") {
+      setNewJobData({ ...newJobData, salary: suggested })
+    }
+    setShowAIEnhancement(false)
   }
 
   return (
@@ -186,15 +314,39 @@ export default function JobsManagement({ onNavigate }: JobsManagementProps) {
             animate={{ opacity: 1, y: 0 }}
             className="bg-white rounded-lg border border-slate-200 p-6 mb-8"
           >
+            {showSuccessMessage && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3"
+              >
+                <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="font-semibold text-green-900">Job Posted Successfully!</p>
+                  <p className="text-sm text-green-700">Your job posting is now live and accepting applications.</p>
+                </div>
+              </motion.div>
+            )}
+
             <h2 className="text-2xl font-bold mb-6">Create New Job Posting</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
                 type="text"
                 placeholder="Job Title"
+                value={newJobData.title}
+                onChange={(e) => setNewJobData({ ...newJobData, title: e.target.value })}
                 className="px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <select className="px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option>Select Department</option>
+              <select 
+                value={newJobData.department}
+                onChange={(e) => setNewJobData({ ...newJobData, department: e.target.value })}
+                className="px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Select Department</option>
                 <option>Engineering</option>
                 <option>Product</option>
                 <option>Design</option>
@@ -203,9 +355,15 @@ export default function JobsManagement({ onNavigate }: JobsManagementProps) {
               <input
                 type="text"
                 placeholder="Location"
+                value={newJobData.location}
+                onChange={(e) => setNewJobData({ ...newJobData, location: e.target.value })}
                 className="px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <select className="px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <select 
+                value={newJobData.type}
+                onChange={(e) => setNewJobData({ ...newJobData, type: e.target.value as "Full-time" | "Contract" | "Part-time" })}
+                className="px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
                 <option>Full-time</option>
                 <option>Contract</option>
                 <option>Part-time</option>
@@ -213,22 +371,122 @@ export default function JobsManagement({ onNavigate }: JobsManagementProps) {
               <input
                 type="text"
                 placeholder="Salary Range"
+                value={newJobData.salary}
+                onChange={(e) => setNewJobData({ ...newJobData, salary: e.target.value })}
                 className="px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <input
                 type="text"
                 placeholder="Required Skills"
+                value={newJobData.skills}
+                onChange={(e) => setNewJobData({ ...newJobData, skills: e.target.value })}
                 className="px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <textarea
               placeholder="Job Description"
               rows={6}
+              value={newJobData.description}
+              onChange={(e) => setNewJobData({ ...newJobData, description: e.target.value })}
               className="w-full mt-4 px-4 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
             ></textarea>
+
+            {/* AI Enhancement Section */}
+            {showAIEnhancement && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                className="mt-6 p-4 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg border border-purple-200"
+              >
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                  <h3 className="font-bold text-slate-900">AI Enhancement Suggestions</h3>
+                </div>
+
+                <div className="space-y-3">
+                  {getAISuggestions().map((suggestion, idx) => (
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.1 }}
+                      className="bg-white p-4 rounded-lg border border-slate-200"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex-1">
+                          <p className="font-semibold text-slate-900 mb-1">{suggestion.field}</p>
+                          <p className="text-sm text-slate-600 mb-2">
+                            <span className="font-medium">Current:</span> {suggestion.current}
+                          </p>
+                          <p className="text-sm text-blue-600 mb-2">
+                            <span className="font-medium">Suggested:</span> {suggestion.suggested}
+                          </p>
+                          <p className="text-xs text-slate-500 italic">{suggestion.reason}</p>
+                        </div>
+                        {suggestion.field !== "Overall" && suggestion.field !== "Description" && (
+                          <Button
+                            size="sm"
+                            onClick={() => applyAISuggestion(suggestion.field, suggestion.suggested)}
+                            className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 flex-shrink-0"
+                          >
+                            Apply
+                          </Button>
+                        )}
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
             <div className="flex gap-3 mt-6">
-              <Button className="bg-gradient-to-r from-[#1a4b8c] to-[#2ec4b6]">Publish Job</Button>
-              <Button variant="outline" onClick={() => setShowJobForm(false)}>
+              <Button 
+                onClick={handlePublishJob}
+                disabled={showSuccessMessage}
+                className="bg-gradient-to-r from-[#1a4b8c] to-[#2ec4b6]"
+              >
+                {showSuccessMessage ? "Published!" : "Publish Job"}
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={handleAIEnhancement}
+                disabled={isAnalyzing || showAIEnhancement}
+                className="gap-2 bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200 hover:from-purple-100 hover:to-blue-100"
+              >
+                {isAnalyzing ? (
+                  <>
+                    <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Analyzing...
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    AI Enhancement
+                  </>
+                )}
+              </Button>
+              <Button variant="outline" onClick={() => {
+                setShowJobForm(false)
+                setShowAIEnhancement(false)
+                setNewJobData({
+                  title: "",
+                  department: "",
+                  location: "",
+                  type: "Full-time",
+                  salary: "",
+                  skills: "",
+                  description: "",
+                })
+              }}>
                 Cancel
               </Button>
             </div>

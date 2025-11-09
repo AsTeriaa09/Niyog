@@ -1,6 +1,6 @@
 export const userProfile = {
   id: "user_001",
-  name: "Alex Johnson",
+  name: "Siratul Islam",
   email: "alex@example.com",
   phone: "+1 (555) 123-4567",
   title: "Full Stack Developer",
