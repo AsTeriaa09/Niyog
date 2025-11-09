@@ -19,7 +19,8 @@ AI-powered recruiting platform with a Next.js frontend and a FastAPI backend (on
 
 ### AI Workflow
 
-![AI Workflow](python/images%20for%20readme/ai-workflow.png)
+<img width="3658" height="1234" alt="ai-workflow 1" src="https://github.com/user-attachments/assets/af1633ae-9233-4bd7-84b5-2c2d49372411" />
+
 <small>End-to-end flow of how requests reach the AI layer and return enriched results.</small>
 
 ### ER Diagram
