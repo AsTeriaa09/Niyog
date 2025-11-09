@@ -16,6 +16,7 @@ AI-powered recruiting platform with a Next.js frontend and a FastAPI backend (on
 ## 🌟 Overview
 
 Niyog helps employers and job seekers with:
+
 - Smart job matching and candidate pipelines
 - CV analysis and improvement suggestions
 - Interview simulation and structured feedback
@@ -172,4 +173,5 @@ MIT — see LICENSE
 ---
 
 Notes
+
 - This README describes the current state and planned direction. Diagrams are drafts and will evolve as persistence/auth are added.
