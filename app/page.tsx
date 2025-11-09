@@ -115,7 +115,7 @@ export default function Home() {
                 <button
                   onClick={() => setCurrentPage("dashboard")}
                   className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    currentPage === "dashboard" ? "bg-blue-100 text-blue-700" : "hover:bg-gray-100 text-gray-700"
+                    currentPage === "dashboard" ? "text-[#1a4b8c]" : "hover:bg-gray-100 text-gray-700"
                   }`}
                 >
                   Dashboard
@@ -123,7 +123,7 @@ export default function Home() {
                 <button
                   onClick={() => setCurrentPage("jobs")}
                   className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    currentPage === "jobs" ? "bg-blue-100 text-blue-700" : "hover:bg-gray-100 text-gray-700"
+                    currentPage === "jobs" ? "text-[#1a4b8c]" : "hover:bg-gray-100 text-gray-700"
                   }`}
                 >
                   Jobs
@@ -131,7 +131,7 @@ export default function Home() {
                 <button
                   onClick={() => setCurrentPage("candidates")}
                   className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    currentPage === "candidates" ? "bg-blue-100 text-blue-700" : "hover:bg-gray-100 text-gray-700"
+                    currentPage === "candidates" ? "text-[#1a4b8c]" : "hover:bg-gray-100 text-gray-700"
                   }`}
                 >
                   Candidates
@@ -139,7 +139,7 @@ export default function Home() {
                 <button
                   onClick={() => setCurrentPage("insights")}
                   className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                    currentPage === "insights" ? "bg-blue-100 text-blue-700" : "hover:bg-gray-100 text-gray-700"
+                    currentPage === "insights" ? "text-[#1a4b8c]" : "hover:bg-gray-100 text-gray-700"
                   }`}
                 >
                   Insights

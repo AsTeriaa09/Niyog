@@ -105,7 +105,7 @@ export default function JobsManagement({ onNavigate }: JobsManagementProps) {
             <h1 className="text-3xl font-bold text-slate-900">Manage Jobs</h1>
             <p className="text-sm text-slate-600 mt-1">Create and manage your job postings</p>
           </div>
-          <Button onClick={() => setShowJobForm(!showJobForm)} className="bg-blue-600 hover:bg-blue-700 gap-2">
+          <Button onClick={() => setShowJobForm(!showJobForm)} className="bg-gradient-to-r from-[#1a4b8c] to-[#2ec4b6] hover:bg-blue-700 gap-2">
             <Plus className="w-4 h-4" />
             Post New Job
           </Button>

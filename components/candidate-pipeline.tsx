@@ -5,6 +5,8 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { MessageSquare, Calendar, Filter, Search, Star } from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
+import { toast } from "@/hooks/use-toast"
 
 interface Candidate {
   id: string
@@ -27,6 +29,7 @@ interface CandidatePipelineProps {
 }
 
 export default function CandidatePipeline({ onNavigate }: CandidatePipelineProps) {
+  const { toast } = useToast()
   const [candidates, setCandidates] = useState<Candidate[]>([
     {
       id: "1",
@@ -128,8 +131,12 @@ export default function CandidatePipeline({ onNavigate }: CandidatePipelineProps
     count: candidates.filter((c) => c.stage === stage).length,
   }))
 
-  const handleScheduleInterview = (candidateId: string) => {
-    alert(`Scheduling interview for candidate ${candidateId}`)
+  const handleScheduleInterview = (candidateId: string, candidateName: string) => {
+    toast({
+      title: "Interview Scheduled",
+      description: `Interview with ${candidateName} has been scheduled successfully.`,
+      className: "bg-gradient-to-r from-[#1a4b8c] to-[#2ec4b6] text-white border-0",
+    })
   }
 
   const handleMoveStage = (candidateId: string, newStage: string) => {
@@ -285,8 +292,8 @@ export default function CandidatePipeline({ onNavigate }: CandidatePipelineProps
                         <div className="flex gap-2">
                           <Button
                             size="sm"
-                            className="flex-1 bg-blue-600 hover:bg-blue-700 gap-2"
-                            onClick={() => handleScheduleInterview(candidate.id)}
+                            className="flex-1 bg-gradient-to-r from-[#1a4b8c] to-[#2ec4b6] hover:opacity-90 gap-2"
+                            onClick={() => handleScheduleInterview(candidate.id, candidate.name)}
                           >
                             <Calendar className="w-4 h-4" />
                             Schedule Interview
@@ -308,10 +315,10 @@ export default function CandidatePipeline({ onNavigate }: CandidatePipelineProps
             </div>
           </div>
 
-          {/* Right Sidebar - Top Matches */}
+          {/* Right Sidebar - Blind Spot Analysis Matches */}
           {showTopMatches && (
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-4">
-              <h2 className="text-xl font-bold text-slate-900 mb-4">Top Matches</h2>
+              <h2 className="text-xl font-bold text-slate-900 mb-4">Blind Spot Analysis Matches</h2>
 
               {topMatches.map((candidate, idx) => (
                 <motion.div
@@ -347,8 +354,8 @@ export default function CandidatePipeline({ onNavigate }: CandidatePipelineProps
                   <div className="space-y-2">
                     <Button
                       size="sm"
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-xs"
-                      onClick={() => handleScheduleInterview(candidate.id)}
+                      className="w-full bg-gradient-to-r from-[#1a4b8c] to-[#2ec4b6] hover:opacity-90 text-xs"
+                      onClick={() => handleScheduleInterview(candidate.id, candidate.name)}
                     >
                       Schedule Interview
                     </Button>

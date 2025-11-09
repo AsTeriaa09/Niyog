@@ -6,12 +6,14 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import ProfileAvatar from "@/components/profile-avatar"
+import { useToast } from "@/hooks/use-toast"
 
 interface NavProps {
   onNavigate?: (page: string) => void
 }
 
 export default function EmployerDashboard({ onNavigate }: NavProps) {
+  const { toast } = useToast()
   const [selectedJob, setSelectedJob] = useState("senior-frontend")
 
   // Key metrics data
@@ -121,11 +123,18 @@ export default function EmployerDashboard({ onNavigate }: NavProps) {
 
   const COLORS = ["#3b82f6", "#10b981", "#8b5cf6", "#f59e0b", "#ef4444", "#06b6d4"]
 
+  const handleSchedule = (candidateName: string) => {
+    toast({
+      title: "Interview Scheduled",
+      description: `Interview with ${candidateName} has been scheduled successfully.`,
+      className: "bg-gradient-to-r from-[#1a4b8c] to-[#2ec4b6] text-white border-0",
+    })
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
      
 
-      {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Key Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -268,16 +277,16 @@ export default function EmployerDashboard({ onNavigate }: NavProps) {
             </motion.div>
           </div>
 
-          {/* Right Column - Top Matches & Insights */}
+          {/* Right Column - Blind Spot Analysis Matches & Insights */}
           <div className="space-y-8">
-            {/* Top Matches */}
+            {/* Blind Spot Analysis Matches */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15 }}
               className="bg-white rounded-lg border border-gray-200 p-6"
             >
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Top Matches</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Blind Spot Analysis Matches</h2>
 
               <div className="space-y-4">
                 {topCandidates.map((candidate, idx) => (
@@ -314,6 +323,7 @@ export default function EmployerDashboard({ onNavigate }: NavProps) {
                         size="sm" 
                         variant="default" 
                         className="flex-1 bg-gradient-to-r from-[#1a4b8c] to-[#2ec4b6] hover:opacity-90"
+                        onClick={() => handleSchedule(candidate.name)}
                       >
                         Schedule
                       </Button>
