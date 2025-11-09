@@ -1,0 +1,22 @@
+# virtual env
+.venv/
+
+# bytecode
+__pycache__/
+*.py[cod]
+
+# tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# coverage
+.coverage
+htmlcov/
+
+# env files
+.env
+
+# local data
+*.sqlite3
+*.db
