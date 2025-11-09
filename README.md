@@ -16,18 +16,22 @@ AI-powered recruiting platform with a Next.js frontend and a FastAPI backend (on
 ## 📸 Visuals
 
 ### AI Workflow
+
 ![AI Workflow](python/images%20for%20readme/ai-workflow.png)
 <small>End-to-end flow of how requests reach the AI layer and return enriched results.</small>
 
 ### ER Diagram
+
 ![ER Diagram](python/images%20for%20readme/ER-Diagram.png)
 <small>Draft entity relationships (will evolve with persistence layer).</small>
 
 ### Sequence Diagram
+
 ![Sequence Diagram](python/images%20for%20readme/Niyog-Squence-Diagram.png)
 <small>Temporal interaction between frontend, backend, and external AI provider.</small>
 
 ### User Workflow
+
 ![User Workflow](python/images%20for%20readme/Niyog-UserWorkFlow.png)
 <small>High-level journey a user follows across key product stages.</small>
 
@@ -143,46 +147,50 @@ docker build -t niyog-fastapi .
 docker run -p 8000:8000 --env-file .env niyog-fastapi
 ```
 
-## 🧭 Architecture (draft)
-
-High-level request flow (simplified):
-
-```mermaid
-sequenceDiagram
-	participant Web as Next.js Frontend
-	participant API as FastAPI Backend
-	participant AI as External AI Provider
-
-	Web->>API: POST /ai/match | /ai/cv-analysis | ...
-	API-->>AI: Optional outbound call (/ai/complete)
-	AI-->>API: Completion response
-	API-->>Web: JSON result
-```
-
-AI workflow (example: CV Analysis):
-
-```mermaid
-flowchart TD
-	A[CV Text] --> B[Preprocess]
-	B --> C[Keyword Extraction]
-	C --> D[Suggestions Heuristic]
-	D --> E[Response JSON]
-```
-
-Data sketch (future-state, illustrative):
-
-```mermaid
-erDiagram
-	Candidate ||--o{ CV : has
-	Candidate ||--o{ Application : applies
-	Job ||--o{ Application : posts
-	Application ||--o{ Interview : schedules
-```
-
 ## 📦 Contributing
 
-- Frontend changes target `main` as usual.
-- Backend/AI changes target the `Python` branch only. Open PRs from `Python` to `main` when ready.
+We welcome contributions. Please follow these lightweight rules to keep the repo healthy and the main branch stable.
+
+### Branching model
+- Frontend (Next.js): work against `main`.
+- Backend/AI (FastAPI): work against `Python` only. Do not push backend code to `main`.
+- Use short, descriptive branches: `feature/<slug>`, `fix/<slug>`, `docs/<slug>`.
+
+### Commit messages (Conventional Commits)
+- `feat: ...` new feature
+- `fix: ...` bug fix
+- `docs: ...` docs-only changes
+- `refactor: ...` code change that neither fixes a bug nor adds a feature
+- `test: ...` add or update tests
+- `chore: ...` tooling or maintenance
+
+### Pull requests
+- Keep PRs focused and under ~500 lines when possible.
+- Include a brief description: context, what changed, how to test.
+- PR title should match commit convention.
+- For backend PRs: target `Python`. For frontend PRs: target `main`.
+- Link related issues using `Fixes #<id>` when relevant.
+
+### Quality checks before opening a PR
+- Frontend
+	- App builds and runs locally: `pnpm install` then `pnpm dev`.
+	- Lint passes (use the project’s configured linters if available).
+- Backend
+	- API runs locally: `uvicorn src.app:app --reload`.
+	- Tests pass: `pytest -q`.
+	- Endpoints you changed are documented in `python/README.md`.
+
+### Code style (guidance)
+- Frontend: follow existing patterns, prefer TypeScript types, keep components small and accessible.
+- Backend: type-hint Python functions, keep endpoints thin and move logic into `services/`, share request/response models in `schemas/`.
+
+### Issue reporting
+- Use clear titles and steps to reproduce.
+- Label appropriately: `bug`, `enhancement`, `docs`, `question`.
+
+### Security & secrets
+- Never commit secrets (.env). Use `.env.example` for placeholders.
+- If a secret is committed by mistake, rotate it immediately and open a small PR to remove it from history if necessary.
 
 ## 📜 License
 
