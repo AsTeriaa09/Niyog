@@ -131,6 +131,12 @@ export default function EmployerDashboard({ onNavigate }: NavProps) {
     })
   }
 
+  const handlePostNewJob = () => {
+    if (onNavigate) {
+      onNavigate("jobs")
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
      
@@ -168,7 +174,12 @@ export default function EmployerDashboard({ onNavigate }: NavProps) {
             >
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-bold text-gray-900">Active Jobs</h2>
-                <Button variant="outline" size="sm" className="border-gray-300 text-gray-700 hover:bg-gray-100">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="border-gray-300 text-gray-700 hover:bg-gray-100"
+                  onClick={handlePostNewJob}
+                >
                   Post New Job
                 </Button>
               </div>

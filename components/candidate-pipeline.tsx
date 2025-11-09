@@ -215,7 +215,7 @@ export default function CandidatePipeline({ onNavigate }: CandidatePipelineProps
                         <div className="flex items-center gap-3 mb-1">
                           <h3 className="font-bold text-slate-900">{candidate.name}</h3>
                           <Badge className={stageColors[candidate.stage]}>{candidate.stage}</Badge>
-                          <Badge className="bg-emerald-100 text-emerald-800">{candidate.match}%</Badge>
+                          <Badge className="bg-gradient-to-r from-[#1a4b8c] to-[#2ec4b6] text-white">{candidate.match}%</Badge>
                         </div>
                         <p className="text-sm text-slate-600">{candidate.role}</p>
                       </div>
@@ -330,7 +330,7 @@ export default function CandidatePipeline({ onNavigate }: CandidatePipelineProps
                 >
                   <div className="flex items-start justify-between mb-2">
                     <h3 className="font-bold text-slate-900">{candidate.name}</h3>
-                    <Badge className="bg-emerald-500">{candidate.match}%</Badge>
+                    <Badge className="bg-gradient-to-r from-[#1a4b8c] to-[#2ec4b6] text-white">{candidate.match}%</Badge>
                   </div>
                   <p className="text-sm text-slate-600 mb-2">{candidate.role}</p>
                   <div className="flex gap-1 mb-3">
