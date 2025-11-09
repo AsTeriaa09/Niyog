@@ -1,4 +1,6 @@
-# Niyog
+<p align="center">
+  <img src="public/logo.png" alt="Niyog logo" width="180" />
+</p>
 
 AI-powered recruiting platform with a Next.js frontend and a FastAPI backend (on the `Python` branch) for smart matching, CV analysis, interview simulation, and growth insights.
 
