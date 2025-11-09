@@ -38,6 +38,13 @@ The API will be available at http://localhost:8000
 - GET `/health` → `{ "status": "ok" }`
 - POST `/ai/echo` → echoes your message
 - POST `/ai/complete` → calls AI provider (OpenAI). Requires `OPENAI_API_KEY`.
+- POST `/ai/match` → basic skills overlap scoring
+- POST `/ai/cv-analysis` → extract keywords and suggestions from CV text (placeholder logic)
+- GET `/ai/cv-analysis` → return latest CV analysis in memory
+- POST `/ai/analyse-profile` → analyse profile summary for strengths and gaps
+- POST `/ai/interview-simulator` → generate a set of interview questions
+- POST `/ai/blind-spots` → identify skills missing for a target role
+- POST `/ai/growth-insights` → produce a simple growth roadmap
 
 ### Example: echo
 
@@ -49,6 +56,19 @@ curl -X POST http://localhost:8000/ai/echo -H "Content-Type: application/json" -
 
 ```bash
 curl -X POST http://localhost:8000/ai/complete -H "Content-Type: application/json" -d '{"prompt":"Say hi","max_tokens":16}'
+```
+
+### Example: match
+
+```bash
+curl -X POST http://localhost:8000/ai/match -H "Content-Type: application/json" -d '{"candidate_skills":["Python","SQL"],"job_skills":["Python","Docker","SQL"]}'
+```
+
+### Example: CV analysis
+
+```bash
+curl -X POST http://localhost:8000/ai/cv-analysis -H "Content-Type: application/json" -d '{"cv_text":"Experienced developer skilled in Python and FastAPI."}'
+curl http://localhost:8000/ai/cv-analysis
 ```
 
 ## CORS
