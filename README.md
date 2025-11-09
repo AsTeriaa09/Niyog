@@ -19,22 +19,26 @@ AI-powered recruiting platform with a Next.js frontend and a FastAPI backend (on
 
 ### AI Workflow
 
-![AI Workflow](python/images%20for%20readme/ai-workflow.png)
+<img width="3658" height="1234" alt="ai-workflow 1" src="https://github.com/user-attachments/assets/ceef7dd6-241d-4467-9f31-c54e56cc4202" />
+
 <small>End-to-end flow of how requests reach the AI layer and return enriched results.</small>
 
 ### ER Diagram
 
-![ER Diagram](python/images%20for%20readme/ER-Diagram.png)
+<img width="1719" height="3630" alt="ER-Diagram 1" src="https://github.com/user-attachments/assets/9ddde5c3-49de-4daa-be71-571607ef88a6" />
+
 <small>Draft entity relationships (will evolve with persistence layer).</small>
 
 ### Sequence Diagram
 
-![Sequence Diagram](python/images%20for%20readme/Niyog-Squence-Diagram.png)
+<img width="2584" height="5644" alt="Niyog-Squence-Diagram 1" src="https://github.com/user-attachments/assets/34999eac-6fa8-4ed4-a769-a0d90ae934d9" />
+
 <small>Temporal interaction between frontend, backend, and external AI provider.</small>
 
 ### User Workflow
 
-![User Workflow](python/images%20for%20readme/Niyog-UserWorkFlow.png)
+<img width="5337" height="4500" alt="Niyog-UserWorkFlow 1" src="https://github.com/user-attachments/assets/e4e63bcd-6733-424c-ae02-71ec8f0b0d61" />
+
 <small>High-level journey a user follows across key product stages.</small>
 
 ## 🌟 Overview
