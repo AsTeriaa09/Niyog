@@ -15,17 +15,21 @@ AI-powered recruiting platform with a Next.js frontend and a FastAPI backend (on
 
 ## 📸 Visuals
 
-<div align="center">
-
+### AI Workflow
 ![AI Workflow](python/images%20for%20readme/ai-workflow.png)
+<small>End-to-end flow of how requests reach the AI layer and return enriched results.</small>
 
+### ER Diagram
 ![ER Diagram](python/images%20for%20readme/ER-Diagram.png)
+<small>Draft entity relationships (will evolve with persistence layer).</small>
 
-![Niyog Sequence Diagram](python/images%20for%20readme/Niyog-Squence-Diagram.png)
+### Sequence Diagram
+![Sequence Diagram](python/images%20for%20readme/Niyog-Squence-Diagram.png)
+<small>Temporal interaction between frontend, backend, and external AI provider.</small>
 
-![Niyog User Workflow](python/images%20for%20readme/Niyog-UserWorkFlow.png)
-
-</div>
+### User Workflow
+![User Workflow](python/images%20for%20readme/Niyog-UserWorkFlow.png)
+<small>High-level journey a user follows across key product stages.</small>
 
 ## 🌟 Overview
 
