@@ -130,53 +130,45 @@ async def ai_get_latest_cv_analysis():
 async def ai_analyse_profile(req: ProfileAnalysisRequest):
     summary_len = len(req.profile_summary.split())
     strengths = ["Clear communication", "Domain familiarity"] if summary_len > 20 else ["Concise"]
-    gaps = ["Expand technical depth"] if summary_len < 50 else []
-    return {"word_count": summary_len, "strengths": strengths, "gaps": gaps}
+    from fastapi import FastAPI
+    from fastapi.middleware.cors import CORSMiddleware
+    import os
+    from dotenv import load_dotenv
 
+    # Load env
+    load_dotenv()
 
-@app.post("/ai/interview-simulator")
-async def ai_interview_sim(req: InterviewSimRequest):
-    base_questions = [
-        f"Describe a challenge you faced in {req.role} and how you solved it.",
-        f"How do you keep your {req.role} skills up to date?",
-        f"Explain a recent project related to {req.role}.",
-        f"What would you improve in your last {req.role} project?",
-        f"How do you handle tight deadlines in {req.role}?",
-    ]
-    selected = base_questions[: req.questions]
-    difficulty_factor = {"easy": 0.8, "medium": 1.0, "hard": 1.2}.get(req.difficulty, 1.0)
-    return {"questions": selected, "difficulty": req.difficulty, "complexity_multiplier": difficulty_factor}
+    app = FastAPI(title="Niyog AI Backend", version="0.2.0")
 
+    # CORS
+    origins_env = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000")
+    allowed_origins = [o.strip() for o in origins_env.split(",") if o.strip()]
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=allowed_origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
-@app.post("/ai/blind-spots")
-async def ai_blind_spots(req: BlindSpotsRequest):
-    known = set(s.lower() for s in req.skills)
-    role_expectations = {"data scientist": {"python", "statistics", "ml", "docker", "sql"}}
-    expectations = role_expectations.get(req.target_role.lower(), set())
-    blind_spots = sorted(expectations - known)
-    recommendations = [f"Study {s}" for s in blind_spots]
-    return {"blind_spots": blind_spots, "recommendations": recommendations}
+    # Routers
+    from src.routers.root import router as root_router
+    from src.routers.general import router as general_router
+    from src.routers.openai_api import router as openai_router
+    from src.routers.match import router as match_router
+    from src.routers.cv import router as cv_router
+    from src.routers.profile import router as profile_router
+    from src.routers.interview import router as interview_router
+    from src.routers.blindspots import router as blindspots_router
+    from src.routers.growth import router as growth_router
 
-
-@app.post("/ai/growth-insights")
-async def ai_growth_insights(req: GrowthInsightsRequest):
-    roadmap = [f"Milestone: progress toward {g}" for g in req.goals]
-    return {"current_level": req.current_level, "roadmap": roadmap, "goal_count": len(req.goals)}
-
-
-@app.get("/")
-async def root():
-    return {
-        "name": "Niyog AI Backend",
-        "endpoints": [
-            "/health",
-            "/ai/echo",
+    app.include_router(root_router)
+    app.include_router(general_router)
+    app.include_router(openai_router)
+    app.include_router(match_router)
+    app.include_router(cv_router)
+    app.include_router(profile_router)
+    app.include_router(interview_router)
+    app.include_router(blindspots_router)
+    app.include_router(growth_router)
             "/ai/complete",
-            "/ai/match",
-            "/ai/cv-analysis (POST/GET)",
-            "/ai/analyse-profile",
-            "/ai/interview-simulator",
-            "/ai/blind-spots",
-            "/ai/growth-insights",
-        ],
-    }

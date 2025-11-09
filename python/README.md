@@ -105,3 +105,26 @@ pytest -q
 ```
 
 If imports fail in tests, ensure you are running `pytest` from the `python` folder with the venv activated.
+
+## Project structure
+
+```
+python/
+  src/
+    app.py                # FastAPI app, registers routers
+    routers/
+      root.py             # / (root)
+      general.py          # /health, /ai/echo, /ai/complete
+      match.py            # /ai/match
+      cv.py               # /ai/cv-analysis (POST/GET)
+      profile.py          # /ai/analyse-profile
+      interview.py        # /ai/interview-simulator
+      blindspots.py       # /ai/blind-spots
+      growth.py           # /ai/growth-insights
+    schemas/
+      general.py, match.py, cv.py, profile.py, interview.py, blindspots.py, growth.py
+    services/
+      matching_service.py, cv_service.py, profile_service.py, interview_service.py, blindspots_service.py, growth_service.py
+```
+
+All endpoints and paths remain the same; logic has been moved into services and schemas for maintainability.
