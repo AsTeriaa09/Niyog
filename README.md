@@ -90,7 +90,7 @@ Copy-Item .env.example .env
 uvicorn src.app:app --reload --port 8000
 ```
 
-The API will be available at http://localhost:8000
+The API will be available at https://niyogapitest.netlify.app/#/
 
 ### Available endpoints
 
